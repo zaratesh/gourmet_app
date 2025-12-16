@@ -1,4 +1,16 @@
 <?php
+/**
+ * PÁGINA PRINCIPAL - TIENDA GOURMET
+ * 
+ * Esta es la página de inicio de la tienda en línea de alimentos gourmet.
+ * Muestra información de bienvenida, productos destacados y opciones de acceso.
+ * Utiliza sesiones para mantener el estado del usuario (autenticación).
+ * 
+ * @author Proyecto Gourmet
+ * @version 1.0
+ */
+
+// Iniciar sesión para verificar si el usuario está autenticado
 session_start();
 ?>
 <!DOCTYPE html>
@@ -12,13 +24,16 @@ session_start();
 </head>
 <body>
 
+<!-- ENCABEZADO: Logo y opciones de usuario -->
 <header class="bg-dark text-white py-3">
   <div class="container d-flex justify-content-between align-items-center">
     <h1 class="h3 mb-0">Tienda de Alimentos y Productos Gourmet</h1>
     <div>
+      <!-- Si el usuario está autenticado, mostrar nombre y botón de cerrar sesión -->
       <?php if (isset($_SESSION['usuario_nombre'])): ?>
         <span class="me-3">Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></span>
         <a href="logout.php" class="btn btn-outline-light btn-sm">Cerrar sesión</a>
+      <!-- Si no está autenticado, mostrar botones de login y registro -->
       <?php else: ?>
         <a href="login.php" class="btn btn-outline-light btn-sm me-2">Iniciar sesión</a>
         <a href="registro_usuario.php" class="btn btn-success btn-sm">Registrarse</a>
@@ -27,6 +42,7 @@ session_start();
   </div>
 </header>
 
+<!-- NAVEGACIÓN: Menú principal -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container">
     <a class="navbar-brand" href="index.php">Gourmet SPA</a>
@@ -45,6 +61,7 @@ session_start();
           <a class="nav-link" href="carrito.php">Carrito</a>
         </li>
       </ul>
+      <!-- Búsqueda de productos -->
       <form class="d-flex" role="search">
         <input class="form-control form-control-sm me-2" type="search" placeholder="Buscar productos">
         <button class="btn btn-outline-primary btn-sm" type="submit">Buscar</button>
@@ -53,6 +70,7 @@ session_start();
   </div>
 </nav>
 
+<!-- CONTENIDO PRINCIPAL -->
 <main class="container my-4">
   <div class="row">
     <section class="col-md-8">
@@ -68,7 +86,9 @@ session_start();
 
       <h3 class="mt-4 mb-3">Nuevos productos disponibles</h3>
 
+      <!-- PRODUCTOS DESTACADOS: Tarjetas de ejemplo -->
       <div class="row g-3">
+        <!-- Tarjeta 1: Vino Tinto -->
         <div class="col-md-4">
           <div class="card h-100">
             <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Vino tinto">
@@ -79,6 +99,7 @@ session_start();
             </div>
           </div>
         </div>
+        <!-- Tarjeta 2: Queso Gourmet -->
         <div class="col-md-4">
           <div class="card h-100">
             <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Queso gourmet">
@@ -89,6 +110,7 @@ session_start();
             </div>
           </div>
         </div>
+        <!-- Tarjeta 3: Chocolate Amargo -->
         <div class="col-md-4">
           <div class="card h-100">
             <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Chocolate">
@@ -102,6 +124,7 @@ session_start();
       </div>
     </section>
 
+    <!-- BARRA LATERAL: Acceso rápido -->
     <aside class="col-md-4">
       <div class="p-3 bg-light border rounded">
         <h4>Acceso rápido</h4>
@@ -113,11 +136,13 @@ session_start();
   </div>
 </main>
 
+<!-- PIE DE PÁGINA -->
 <footer class="bg-dark text-white text-center py-3 mt-auto">
   <small>&copy; <?php echo date('Y'); ?> Tienda Gourmet en Línea. Proyecto Final Programación Web II.</small>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Script con validaciones de formulario -->
 <script src="js/validaciones.js"></script>
 </body>
 </html>

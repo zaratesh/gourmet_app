@@ -14,30 +14,38 @@
       <div class="card shadow-sm">
         <div class="card-body">
           <h2 class="h4 mb-3 text-center">Registro de usuario</h2>
+          <!-- Formulario de registro que envía datos a guardar_usuario.php -->
           <form action="guardar_usuario.php" method="post">
+            <!-- Campo nombre completo (obligatorio) -->
             <div class="mb-3">
               <label class="form-label" for="nombre">Nombre completo</label>
               <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
+            <!-- Campo email (obligatorio) -->
             <div class="mb-3">
               <label class="form-label" for="email">Correo electrónico</label>
               <input type="email" class="form-control" id="email" name="email" required>
             </div>
+            <!-- Campo dirección (opcional) -->
             <div class="mb-3">
               <label class="form-label" for="direccion">Dirección</label>
               <input type="text" class="form-control" id="direccion" name="direccion">
             </div>
+            <!-- Campo teléfono (opcional) -->
             <div class="mb-3">
               <label class="form-label" for="telefono">Teléfono</label>
               <input type="text" class="form-control" id="telefono" name="telefono">
             </div>
+            <!-- Campo contraseña (obligatorio, mínimo 8 caracteres) -->
             <div class="mb-3">
               <label class="form-label" for="contraseña">Contraseña</label>
               <input type="password" class="form-control" id="contraseña" name="contraseña" required minlength="8">
             </div>
+            <!-- Botón de envío -->
             <button type="submit" class="btn btn-success w-100">Registrar usuario</button>
           </form>
           <hr>
+          <!-- Enlace para ir a login si ya tiene cuenta -->
           <p class="mb-0 text-center">
             ¿Ya tienes cuenta?
             <a href="login.php">Inicia sesión aquí</a>.

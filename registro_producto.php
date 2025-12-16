@@ -17,15 +17,19 @@ if (!isset($_SESSION['usuario_id'])) {
 <body>
 <div class="container my-5">
   <h2 class="mb-4">Registro de alimentos y productos gourmet</h2>
+  <!-- Formulario para registrar nuevos productos, envía datos a guardar_producto.php -->
   <form action="guardar_producto.php" method="post">
+    <!-- Campo nombre del producto (obligatorio) -->
     <div class="mb-3">
       <label class="form-label" for="nombre">Nombre del producto</label>
       <input type="text" class="form-control" id="nombre" name="nombre" required>
     </div>
+    <!-- Campo descripción (opcional) -->
     <div class="mb-3">
       <label class="form-label" for="descripcion">Descripción</label>
       <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
     </div>
+    <!-- Campo categoría (obligatorio) -->
     <div class="mb-3">
       <label class="form-label" for="categoria">Categoría</label>
       <select class="form-select" id="categoria" name="categoria" required>
@@ -36,14 +40,17 @@ if (!isset($_SESSION['usuario_id'])) {
         <option value="Otro">Otro</option>
       </select>
     </div>
+    <!-- Campo precio (obligatorio, decimales permitidos) -->
     <div class="mb-3">
       <label class="form-label" for="precio">Precio</label>
       <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
     </div>
+    <!-- Campo cantidad en inventario (obligatorio) -->
     <div class="mb-3">
       <label class="form-label" for="cantidad_inventario">Cantidad en inventario</label>
       <input type="number" class="form-control" id="cantidad_inventario" name="cantidad_inventario" required>
     </div>
+    <!-- Botón de envío -->
     <button type="submit" class="btn btn-primary">Guardar producto</button>
   </form>
 </div>

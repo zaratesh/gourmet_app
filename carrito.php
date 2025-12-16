@@ -1,17 +1,32 @@
 <?php
+/**
+ * CARRITO DE COMPRAS
+ * 
+ * Esta página muestra el carrito de compras del usuario autenticado.
+ * Permite agregar y eliminar productos, y calcula el total automáticamente.
+ * Requiere autenticación para acceder.
+ * 
+ * @author Proyecto Gourmet
+ * @version 1.0
+ */
+
+// Iniciar sesión
 session_start();
+
+// Verificar que el usuario esté autenticado
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: login.php");
     exit;
 }
 require_once "conexion.php";
 
-// Obtener productos
+// Obtener la lista de todos los productos disponibles para agregar al carrito
 $sql = "SELECT id, nombre, precio FROM PRODUCTOS ORDER BY nombre";
 $stmt = $conexion->query($sql);
 $productos = $stmt->fetchAll();
 
-// Obtener registros actuales del carrito del usuario
+// Obtener los items actualmente en el carrito del usuario
+// Se usa JOIN para obtener el nombre del producto desde la tabla PRODUCTOS
 $sqlCarrito = "SELECT C.id, P.nombre, C.cantidad, C.monto_total
                FROM CARRITO C
                JOIN PRODUCTOS P ON C.id_producto = P.id
@@ -100,34 +115,54 @@ $itemsCarrito = $stmtCarrito->fetchAll();
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Validación básica y cálculo de monto total
+/**
+ * LÓGICA DE VALIDACIÓN Y CÁLCULO DEL CARRITO
+ * 
+ * Este script valida la selección de productos y calcula automáticamente
+ * el monto total basado en el precio unitario y la cantidad seleccionada.
+ */
+
+// Esperar a que el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", function () {
+  // Obtener referencias a los elementos del formulario
   const selectProducto = document.getElementById("producto");
   const inputCantidad = document.getElementById("cantidad");
   const inputMontoTotal = document.getElementById("monto_total");
 
+  /**
+   * Función para actualizar el monto total
+   * Calcula: precio_unitario × cantidad
+   */
   function actualizarMonto() {
+    // Obtener la opción seleccionada del producto
     const opcionSeleccionada = selectProducto.options[selectProducto.selectedIndex];
+    // Extraer el precio del atributo data-precio
     const precio = parseFloat(opcionSeleccionada.getAttribute("data-precio") || 0);
+    // Convertir la cantidad ingresada a número entero
     const cantidad = parseInt(inputCantidad.value || 0);
+    
+    // Si hay precio y cantidad válidos, calcular total
     if (precio > 0 && cantidad > 0) {
       const total = precio * cantidad;
-      inputMontoTotal.value = total.toFixed(2);
+      inputMontoTotal.value = total.toFixed(2); // Mostrar con 2 decimales
     } else {
-      inputMontoTotal.value = "";
+      inputMontoTotal.value = ""; // Limpiar si datos no son válidos
     }
   }
 
+  // Agregar eventos para actualizar monto cuando cambien producto o cantidad
   if (selectProducto && inputCantidad) {
     selectProducto.addEventListener("change", actualizarMonto);
     inputCantidad.addEventListener("input", actualizarMonto);
   }
 
+  // Validar el formulario antes de enviarlo
   const formCarrito = document.getElementById("formCarrito");
   if (formCarrito) {
     formCarrito.addEventListener("submit", function (e) {
+      // Verificar que haya producto seleccionado y cantidad válida
       if (!selectProducto.value || parseInt(inputCantidad.value) <= 0) {
-        e.preventDefault();
+        e.preventDefault(); // Prevenir envío del formulario
         alert("Selecciona un producto y una cantidad válida.");
       }
     });
